@@ -1,0 +1,26 @@
+
+.snake {
+    display: block;
+    margin: 20vh auto auto auto;
+
+    width: 50%;
+    min-width: 200px;
+    max-width: 750px;
+}
+
+.snake > .game {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+
+    background-color: #DFA06E;
+    border: solid #DA9258 5px;
+    border-radius: 10px;
+}
+
+.snake > .game > div {
+    background-color: #86BA90;
+}

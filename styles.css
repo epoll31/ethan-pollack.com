@@ -18,6 +18,8 @@ body{
     margin: 50px auto auto auto;
     width: 75%;
     max-width: 750px;
+
+    display:none;
 }
 .profile {
     border-radius: 100%;
