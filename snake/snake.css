@@ -1,14 +1,14 @@
 
-.snake {
+.snakeFrame {
     display: block;
     margin: 20vh auto auto auto;
 
-    width: 50%;
-    min-width: 200px;
-    max-width: 750px;
+    width: 75vw;
+    max-width: 500px;
+
 }
 
-.snake > .game {
+.snakeFrame > .game {
     width: 100%;
     aspect-ratio: 1 / 1;
 
@@ -20,7 +20,18 @@
     border: solid #DA9258 5px;
     border-radius: 10px;
 }
+.snakeFrame > .game > .tile {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    border: 1px #86BA90 none;
+}
 
-.snake > .game > div {
-    background-color: #86BA90;
+.snakeFrame > .game > .head, 
+.snakeFrame > .game > .body,
+.snakeFrame > .game > .tail {
+    background-color: #F5F3BB;
+}
+
+.snakeFrame > .game > .food {
+    background-color: #DF2935;
 }
