@@ -1,5 +1,5 @@
 
 window.onload = () => {
-    this.snake_init();
+    //this.snake_init();
 };
  
