@@ -1,19 +1,23 @@
 
 size = 500;
-tileSize = this.size / 10;
+tileCount = 20;
+tileSize = this.size / 20;
 
 mouse = { x: 0, y: 0 };
 keyboard = { curr: null, prev: null };
 
 direction = 'up';
+speed = 2;
 parts = [[this.size / 2, this.size / 2]];
+partsToAdd = 10;
 food = [1, 1];
 
 snake_init = () => {
     div = document.getElementById('snake');
+
     game = div.getElementsByClassName('game')[0];
-    for (let i = 1; i <= 10; i++) {
-        for (let j = 1; j <= 10; j++) {
+    for (let i = 1; i <= tileCount; i++) {
+        for (let j = 1; j <= tileCount; j++) {
             let tile = document.createElement('div')
             tile.classList.add('tile');
             tile.style.gridRow = i.toString();
@@ -30,41 +34,83 @@ snake_init = () => {
     window.onkeydown = (e) => {
         keyboard.curr = e.key;
         keyboard.prev = null;
+
+        console.log(e);
+        switch (e.key) {
+            case 'ArrowUp':
+                direction = 'up';
+                break;
+            case 'ArrowDown':
+                direction = 'down';
+                break;
+            case 'ArrowLeft':
+                direction = 'left';
+                break;
+            case 'ArrowRight':
+                direction = 'right';
+                break;
+
+        }
     };
     window.onkeyup = (e) => {
         keyboard.prev = e.key;
         keyboard.curr = null;
     };
 
+    for (; partsToAdd > 0; partsToAdd--) {
+        parts.push(parts[parts.length - 1].slice(0));
+    }
+
     update();
 };
 
 update = () => {
-    
+
     //update
     for (let i = parts.length - 1; i > 0; i--) {
         let dx = parts[i - 1][0] - parts[i][0];
         let dy = parts[i - 1][1] - parts[i][1];
 
-        if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) <= tileSize) {
+        if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) <= tileSize ) {
             continue;
         }
 
-        parts[i][0] += dx * dt;
-        parts[i][1] += dy * dt;
+        parts[i][0] += Math.sign(dx) * speed;
+        parts[i][1] += Math.sign(dy) * speed;
+    }
+    switch (direction) {
+        case 'up':
+            if (parts[0][0] >= speed + tileSize) {
+                parts[0][0] -= speed;
+            }
+            break;
+        case 'down':
+            if (parts[0][0] <= size - speed) {
+                parts[0][0] += speed;
+            }
+            break;
+        case 'left':
+            if (parts[0][1] >= speed+ tileSize) {
+                parts[0][1] -= speed;
+            }
+            break;
+        case 'right':
+            if (parts[0][1] <= size - speed) {
+                parts[0][1] += speed;
+            }
+            break;
+
     }
 
-    let dx = Math.sign(mouse.x - parts[0][0]);
-    let dy = Math.sign(mouse.y - parts[0][1]);
-
-    parts[0][0] += dx;
-    parts[0][1] += dy;
-
+    if (Math.floor(parts[0][0] / tileSize) == food[0] 
+     && Math.floor(parts[0][1] / tileSize) == food[1])  {
+        
+     }
+ 
     // draw
-    refreshChildren(); 
+    refreshChildren();
 
     //set variables for next update
-    prevGameTime = gametime;
     keyboard.prev = keyboard.curr;
 
     //request new frame
@@ -79,7 +125,6 @@ refreshChildren = () => {
             Math.floor(parts[i][0] / tileSize),
             Math.floor(parts[i][1] / tileSize),
             i == 0 ? 'head' : i == (parts.length - 1) ? 'tail' : 'body']);
-        console.log(i + ': ' + parts[i]);
     }
 
     let tiles = document.getElementsByClassName('tile');
