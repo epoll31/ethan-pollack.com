@@ -1,0 +1,60 @@
+.bubbles {
+    width: 400px;
+    margin: auto;
+
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    gap: 30px 40px;
+}
+
+.bubbles > .bubble {
+    border: #191717 solid;
+    color:  #191717;
+    font-size: 30px;
+
+    width: fit-content;
+    height: fit-content;
+
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-align: center;
+    white-space: nowrap;
+    font-weight: bold;
+
+    transition: 0.3s;
+    -webkit-backface-visibility: hidden;
+}
+
+.bubbles > .link {
+    display:inline-flex;
+    flex-direction: column;
+    text-decoration: none;
+}
+.bubbles > .link:hover,
+.bubbles > .link:active,
+.bubbles > .link:focus {
+    display: block;
+    scale: 200%;
+    background-color: #E39667;
+    opacity: 90%;
+}
+
+
+
+/*
+.bubbles > .resume > iframe{
+    max-width: 100px;
+    display: none;
+    filter: blur(1px);
+}
+.bubbles > .resume:hover > iframe{
+    display: inherit;
+    position: relative;
+}
+
+.bubbles > .resume:hover > iframe::-webkit-scrollbar {
+    display: none; 
+}
+*/

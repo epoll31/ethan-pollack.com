@@ -13,29 +13,51 @@
 </head>
 
 <body>
+    <div id="background" class="background"> </div>
     <div id="main" class="center">
         <img class="profile" src="assets/img.png" />
         <img class="name" type="vector" src="assets/full-name-red.svg">
-        <div class="icons">
-            <a class="icon" href="EthanPollackResume.pdf" target="_blank" title="Click to view my resume!">
-                <img type="vector" src="assets/resume-icon.svg" />
-                <p>Resume</p>
-            </a>
-            <a class="icon" href="https://www.linkedin.com/in/ethanpollack" target="_blank"
+        
+        <div class="bubbles">
+            <div class="bubble link" 
+                title="Click to view my resume!"
+                onclick="toggleFrame('EthanPollackResume.pdf')">
+                Resume
+            </div>
+            <a  class="bubble link"
+                href="https://www.linkedin.com/in/ethanpollack" 
+                target="_blank" 
                 title="Click to view my LinkedIn!">
-                <img type="vector" src="assets/linkedin.svg" />
-                <p>LinkedIn</p>
+                LinkedIn
             </a>
-            <a class="icon" href="https://www.github.com/epoll31" target="_blank" title="Click to view my GitHub!">
-                <img type="vector" src="assets/github.svg" />
-                <p>GitHub</p>
+            <a  class="bubble link" 
+                href="https://www.github.com/epoll31" 
+                target="_blank" 
+                title="Click to view my GitHub!">
+                GitHub
             </a>
+            <div class="bubble link"
+                onclick="toggleFrame('pages/playground.html')">Playground</div>
+            <div class="bubble nodisp">Education</div>
+            <div class="bubble nodisp">Work Experience</div>
         </div>
     </div>
     <div id="snake" class="nodisp snakeFrame">
         <div class="game"></div>
     </div>
-    
+
+
+    <div id="frame-container" class="frame-container nodisp">
+        <img id="close" 
+            class="close" 
+            src="assets/icon-x.svg"
+            onclick="toggleFrame()"/>
+        <iframe id="frame" 
+                class="frame"
+                src="EthanPollackResume.pdf"></iframe>
+        
+    </div>
+        
 </body>
 
 </html>
