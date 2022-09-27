@@ -1,6 +1,5 @@
 
 window.onload = () => {
-    //this.snake_init();
     toggleFrame('pages/playground.html')
 };
 

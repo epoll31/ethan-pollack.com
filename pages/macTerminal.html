@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <h1>Mac Terminal Utility</h1>
+        <div>
+            <h2>$Path</h2>
+            <p>
+                '$PATH' is essentially a list of paths that your terminal 
+                session can search through to shorten common used paths. 
+            </p>
+            <h4>Viewing your $PATH</h4>
+            <p> 
+                Run the command 'echo $PATH' in your terminal. This will 
+                return the list of paths. They will be separated by a space, 
+                colon, etc.
+            </p>
+            <h4>Adding to $PATH</h4>
+            <p>
+                What you will need: the full command path and the shorthand
+                command name. Let's call these '/full/path' and 'name', respectively.
+                
+                Run the command 'sudo sh -c 'echo "/full/path" >> /etc/paths.d/name'
+            </p>
+            <h4>Running a command</h4>
+            <p> 
+                Running a command is as simple as writing the command name 
+                followed by any parameters that are required. If the command
+                is not in your $PATH then you must specify the full path name 
+                of a command.
+            </p>
+
+        </div>
+        <div>
+            <h2>Helpful Commands</h2>
+            <h4>echo</h4>
+            <p>
+                Run the command 'echo text' in your terminal. This will repeat
+                any input as an output.
+            </p>
+            <h4>which</h4>
+            <p>
+                Run the command 'which (insert command)' in your terminal. This
+                will display the path of the specified command. 
+            </p>
+            <h4>whoami</h4>
+            <p>
+                Run the command 'whoami' in your terminal. This will display 
+                the username of the current user. 
+            </p>
+        </div>
+    </body>
+</html>

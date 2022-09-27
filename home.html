@@ -14,7 +14,7 @@
 
 <body>
     <div id="background" class="background"> </div>
-    <div id="main" class="center">
+    <div id="main" class="main">
         <img class="profile" src="assets/img.png" />
         <img class="name" type="vector" src="assets/full-name-red.svg">
         
@@ -38,8 +38,11 @@
             </a>
             <div class="bubble link"
                 onclick="toggleFrame('pages/playground.html')">Playground</div>
+            <div class="bubble link"
+                onclick="toggleFrame('pages/macTerminal.html')">Mac Terminal Utility</div>
             <div class="bubble nodisp">Education</div>
             <div class="bubble nodisp">Work Experience</div>
+
         </div>
     </div>
     <div id="snake" class="nodisp snakeFrame">
@@ -48,6 +51,8 @@
 
 
     <div id="frame-container" class="frame-container nodisp">
+        <div class="profile"></div>
+        <img class="name" type="vector" src="assets/full-name-red.svg">
         <img id="close" 
             class="close" 
             src="assets/icon-x.svg"

@@ -2,7 +2,6 @@
 @import url(css/education.css);
 @import url(css/frame.css);
 
-
 .nodisp {
     display: none !important;
 }
@@ -13,16 +12,6 @@
     transition: 0.3s;
 }
 
-html {
-    height: 100%;
-}
-
-body{ 
-    position: relative;
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0px;
-
-}
 .background {
     position: fixed;
     left: 0;
@@ -36,13 +25,18 @@ body{
     z-index: -1;
 }
 
-.center {
+body{ 
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+}
+
+.main {
     display: block;
     margin: 50px auto auto auto;
     width: 75%;
     max-width: 750px;
 }
-.profile {
+.main > .profile {
     border-radius: 100%;
     width: 200px;
     height: 200px;
@@ -52,90 +46,18 @@ body{
     z-index: -5;
 }
 
-.name {
-    margin: 30px 30px 30px 30px;
+.main > .name {
+    margin: 30px 10px 30px 10px;
 }
 
 
-.icons {
-    max-height: 200px;
-    display: flex;
-    gap: 15px;
+@media only screen and (max-width: 640px) {
+    .name {
+    }
 }
-
-.icon {
-    flex: 1;
-    text-decoration: none;
-}
-
-.icon > img {
-    color: transparent;
-    display: block;
-    margin: auto;
-}
-
-.icon:hover  {
-    scale: 110%;
-}
-
-.icon > p {
-    text-align: center;
-    color: #191717;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 20px;
+@media only screen and (max-width: 1008px) {
     
-    margin: 0 ;
-    padding-top: 5px;
 }
-
-@media only screen and (min-width: 0px) and (max-width: 100px) { 
-    .icon > img {
-        height: 20px;
-    }    
-    .icon > p {
-        font-size: 15px;
-    }
-}@media only screen and (min-width: 100px) and (max-width: 200px) { 
-    .icon > img {
-        height: 35px;
-    }    
-    .icon > p {
-        font-size: 15px;
-    }
-}@media only screen and (min-width: 200px) and (max-width: 300px) { 
-    .icon > img {
-        height: 50px;
-    }    
-    .icon > p {
-        font-size: 15px;
-    }
-}@media only screen and (min-width: 300px) and (max-width: 400px) { 
-    .icon > img {
-        height: 65px;
-    }    
-    .icon > p {
-        font-size: 20px;
-    }
-}@media only screen and (min-width: 400px) and (max-width: 500px) { 
-    .icon > img {
-        height: 80px;
-    }    
-    .icon > p {
-        font-size: 20px;
-    }
-}@media only screen and (min-width: 500px) and (max-width: 900px) { 
-    .icon > img {
-        height: 100px;
-    }    
-    .icon > p {
-        font-size: 20px;
-    }
-}@media only screen and (min-width: 900px) { 
-    .icon > img {
-        height: 150px;
-    }    
-    .icon > p {
-        font-size: 30px;
-    }
+@media only screen and (min-width: 1009px)  {
+    
 }
