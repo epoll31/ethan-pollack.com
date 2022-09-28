@@ -3,6 +3,12 @@ const point = {
     make: (x, y) => {
         return {x: x, y: y};
     },
+    zero: () => point.make(0, 0),
+    one: () => point.make(1, 1),
+    up: () => point.make(0, -1),
+    down: () => point.make(0, 1),
+    left: () => point.make(-1, 0),
+    right: () => point.make(1, 0),
     equals: (p1, p2) => {
         return p1.x == p2.x && p1.y == p2.y;
     },
@@ -22,6 +28,16 @@ const point = {
     project: (p, vector) => {
         let coef = point.dot(p, vector) / point.dot(vector, vector)
         return point.make(vector.x * coef, vector.y * coef);
+    },
+    draw: (p, color = '#C16E70', radius = 3, lineWidth = 2, fillColor = 'transparent') => {
+        this.ctx.fiilStyle = fillColor;
+        this.ctx.strokeStyle = color;
+        this.ctx.lineWidth = lineWidth;
+
+        this.ctx.beginPath();
+        this.ctx.arc(p.x, p.y, radius, 0, 2 * Math.PI);
+        this.ctx.stroke();
+        this.ctx.fill();
     }
 }
 
@@ -29,47 +45,21 @@ const line = {
     make: (p1, p2) => {
         return {p1: p1, p2:p2};
     },
-    draw: (ctx, p1, p2, color = '#C16E70', width = 3) => {
-        ctx.strokeStyle = color;
-        ctx.lineWidth = width;
-        ctx.beginPath();
-        ctx.moveTo(p1.x, p1.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.stroke();
+    draw: (l, color = '#C16E70', width = 3) => {
+        this.ctx.strokeStyle = color;
+        this.ctx.lineWidth = width;
+        this.ctx.beginPath();
+        this.ctx.moveTo(l.p1.x, l.p1.y);
+        this.ctx.lineTo(l.p2.x, l.p2.y);
+        this.ctx.stroke();
         //console.log('x: ' + p1.x + ', ' + p1.y + '\t y: ' + p2.x + ', ' + p2.y);
-    },
-    intersection: (l1, l2) => {
-        let a1 = l1.p2.y - l1.p1.y;
-        let b1 = l1.p1.x - l1.p2.x;
-        let c1 = a1 * l1.p1.x + b1 * l1.p1.y;
-
-        let a2 = l2.p2.y - l2.p1.y;
-        let b2 = l2.p1.x - l2.p2.x;
-        let c2 = a2 * l2.p1.x + b1 * l2.p1.y;
-
-        let det = a1 * b2 - a2 * b1;
-
-        if (det == 0) {
-            return undefined;
-        }
-        let x = (b2 * c1 - b1 * c2) / det;
-        let y = (a1 * c2 - a2 * c1) / det;
-
-        if (x < Math.min(l1.p1.x, l1.p2.x))
-        return { x: x, y: y };
     },
     project: (l, vector) => {
         return line.make(point.project(l.p1, vector), point.project(l.p2, vector));
     },
-    intersect: (l1, l2) => {
-        if (point.equals(l1.p1, l2.p1) || point.equals(l1.p1, l2.p2)
-         || point.equals(l1.p2, l2.p1) || point.equals(l1.p2, l2.p1)) {
-            return true;
-        }
-        
-        let norm = point.make(l1.p2.x - l1.p1.x, l1.p2.y - l1.p1.y);
-        let first = line.project(l1, norm);
-        let second = line.project(l2, norm);
+    overlapOnAxis: (l1, l2, axis) => {
+        let first = line.project(l1, axis);
+        let second = line.project(l2, axis);
         let p1 = point.magnitude(first.p1);
         let p2 = point.magnitude(first.p2);
         let p3 = point.magnitude(second.p1);
@@ -78,26 +68,32 @@ const line = {
         let maxFirst = Math.max(p1, p2);
         let minSecond = Math.min(p3, p4);
         let maxSecond = Math.max(p3, p4);
-        if (maxFirst < minSecond || minFirst > maxSecond) {
-            return false;
-        }
+        return !(maxFirst < minSecond || minFirst > maxSecond);
 
-        norm = point.make(l2.p2.x - l2.p1.x, l2.p2.y - l2.p1.y);    
-        first = line.project(l1, norm);
-        second = line.project(l2, norm);
-        p1 = point.magnitude(first.p1);
-        p2 = point.magnitude(first.p2);
-        p3 = point.magnitude(second.p1);
-        p4 = point.magnitude(second.p2);
-        minFirst = Math.min(p1, p2);
-        maxFirst = Math.max(p1, p2);
-        minSecond = Math.min(p3, p4);
-        maxSecond = Math.max(p3, p4);
-        
-        if (maxFirst < minSecond || minFirst > maxSecond) {
-            return false;
+    },
+    intersects: (l1, l2) => {
+        if (point.equals(l1.p1, l2.p1) || point.equals(l1.p1, l2.p2)
+         || point.equals(l1.p2, l2.p1) || point.equals(l1.p2, l2.p1)) {
+            return true;
         }
-        return true;
+        let norm = point.make(l1.p2.x - l1.p1.x, l1.p2.y - l1.p1.y);
+        
+        return line.overlapOnAxis(l1, l2, line.normal(l1))
+            && line.overlapOnAxis(l1, l2, line.normal(l2));
+    },
+    normal: (l) => {
+        let output = point.normal(point.make(l.p2.x - l.p1.x, l.p2.y - l.p1.y));
+        let n = output;
+        let centerX = (l.p1.x + l.p2.x) / 2;
+        let centerY = (l.p1.y + l.p2.y) / 2;
+        
+        drawQueue.queue.push({
+            type: 'line',
+            line: line.make(point.make(-n.x + centerX, -n.y + centerY),
+                            point.make(centerX, centerY))
+        }); 
+
+        return output;
     }
 };
 
@@ -116,7 +112,6 @@ const polys = {
             drawBounds: true,
         };
         polys.polys.push(poly);
-        console.log(polys.polys);
         return poly;
     },
     gen: (x, y, numSides, radius, variance) => {
@@ -135,42 +130,35 @@ const polys = {
         return polys.make(points);
     },
 
-    draw: (ctx) => {
+    draw: () => {
         for (let i = 0; i < polys.polys.length; i++) {
-            polys.drawPoly(polys.at(i), ctx);
+            polys.drawPoly(polys.at(i));
         };
     },
-    drawPoly: (poly, ctx) => {
-        ctx.fillStyle = poly.fillColor;
-        ctx.strokeStyle = poly.borderColor;
-        ctx.lineWidth = poly.borderWidth;
-        ctx.beginPath();
+    drawPoly: (poly) => {
+        this.ctx.fillStyle = poly.fillColor;
+        this.ctx.strokeStyle = poly.borderColor;
+        this.ctx.lineWidth = poly.borderWidth;
+        this.ctx.beginPath();
         for (let i = 0; i < poly.points.length; i++) {
-            ctx.lineTo(poly.points[i].x, poly.points[i].y);
+            this.ctx.lineTo(poly.points[i].x, poly.points[i].y);
         }
-        ctx.lineTo(poly.points[0].x, poly.points[0].y);
-        ctx.fill();
-        ctx.stroke();
+        this.ctx.lineTo(poly.points[0].x, poly.points[0].y);
+        this.ctx.fill();
+        this.ctx.stroke();
 
         if (poly.centerColor !== 'transparent') {
-            let c = polys.center(poly);
-
-            ctx.strokeStyle = poly.borderColor;
-            ctx.lineWidth = 2;
-
-            ctx.beginPath();
-            ctx.arc(c.x, c.y, 3, 0, 2 * Math.PI);
-            ctx.stroke();
+            point.draw(polys.center(poly));
         }
         if (poly.drawBounds) {
             let b = polys.bounds(poly);
 
-            ctx.strokeStyle = poly.borderColor;
-            ctx.lineWidth = 1;
+            this.ctx.strokeStyle = poly.borderColor;
+            this.ctx.lineWidth = 1;
 
-            ctx.beginPath();
-            ctx.rect(b.x, b.y, b.width, b.height);
-            ctx.stroke();
+            this.ctx.beginPath();
+            this.ctx.rect(b.x, b.y, b.width, b.height);
+            this.ctx.stroke();
         }
     },
     rotate: (poly, theta) => {
@@ -221,28 +209,59 @@ const polys = {
             x: (b.left + b.right) / 2,
             y: (b.top + b.bottom) / 2
         };
-        b.contains = (x, y) => {
-            return (b.x <= x && b.right >= x &&
-                b.y <= y && b.bottom >= y);
+        b.contains = (p) => {
+            return (b.x <= p.x && b.right >= p.x &&
+                b.y <= p.y && b.bottom >= p.y);
         };
 
 
         return b;
     },
-    contains: (poly, point) => {
-        let side = { x: polys.bounds(poly).left, y: point.y };
-        let test = { p1: side, p2: point };
+    contains: (poly, p) => {
+        let bounds = polys.bounds(poly);
+        if (!bounds.contains(p)) {
+            return false;
+        }
+
+        let side = point.make(bounds.left, p.y);
+        let test = line.make(side, p);
+
+        drawQueue.queue.push({
+            type: 'line',
+            line: test
+        }); 
 
         let count = 0;
         for (let i = 0; i < poly.points.length; i++) {
             let p1 = poly.points[i];
             let p2 = poly.points[(i + 1) % poly.points.length];
 
-            if (line.intersection({p1: p1, p2: p2}, test)) {
+            if (line.intersects(line.make(p1, p2), test)) {
                 count++;
+
+                drawQueue.queue.push({
+                    type: 'line',
+                    line: line.make(p1, p2),
+                    color: '#ffffff'
+                }); 
             }
         }
+        console.log(count);
         return count % 2 == 1;
+    }
+};
+
+const drawQueue = {
+    queue: [],
+    draw: () => {
+        if (drawQueue.queue.length == 0){
+            return;
+        }
+        for (let item = drawQueue.queue.pop(); item != undefined; item = drawQueue.queue.pop()) {
+            if (item.type === 'line') {
+                line.draw(item.line, item.color, item.width);
+            }
+        }
     }
 };
 
@@ -257,7 +276,7 @@ window.onload = () => {
     this.ctx = canvas.getContext('2d');
 
     this.document.onmousemove = (e) => {
-        this.mouse = { x: e.x, y: e.y };
+        this.mouse = point.make(e.x, e.y);
     };
 };
 
@@ -279,24 +298,22 @@ loop = () => {
         else {
             polys.at(0).borderWidth = 3;
         }
-
-        if (this.mouse && bounds.contains(this.mouse.x, this.mouse.y)) {
-            line.draw(this.ctx, { x: bounds.left, y: this.mouse.y }, this.mouse);
-        }
     }
 
-    polys.draw(this.ctx);
+    polys.draw();
 
-    line.draw(this.ctx, l1.p1, l1.p2);
-    line.draw(this.ctx, l2.p1, l2.p2);
+    line.draw(l1);
+    line.draw(l2);
+
+    drawQueue.draw();
 
     step++;
     requestAnimationFrame(loop);
 };
 
 
-//l1 = { p1: { x: 70, y: 50 }, p2: { x: 110, y: 10 } };
-//l2 = { p1: { x: 70, y: 70 }, p2: { x: 110, y: 110 } };
-l1 = { p1: { x: 10, y: 110 }, p2: { x: 110, y: 10 } };
-l2 = { p1: { x: 10, y: 10 }, p2: { x: 110, y: 110 } };
+l1 = line.make({ x: 70, y: 50 },  { x: 110, y: 10 } );
+l2 = line.make({ x: 70, y: 70 },  { x: 110, y: 110 } );
+l1 = line.make({ x: 10, y: 110 }, { x: 110, y: 10 } );
+l2 = line.make({ x: 10, y: 10 },  { x: 110, y: 110 } );
 requestAnimationFrame(loop);
