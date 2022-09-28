@@ -79,14 +79,16 @@ const line = {
         let norm = point.make(l1.p2.x - l1.p1.x, l1.p2.y - l1.p1.y);
         
         return line.overlapOnAxis(l1, l2, line.normal(l1))
-            && line.overlapOnAxis(l1, l2, line.normal(l2));
+            & /* using & not && for drawQueue in line.normal */ 
+            line.overlapOnAxis(l1, l2, line.normal(l2));
     },
     normal: (l) => {
         let output = point.normal(point.make(l.p2.x - l.p1.x, l.p2.y - l.p1.y));
-        let n = output;
-        let centerX = (l.p1.x + l.p2.x) / 2;
-        let centerY = (l.p1.y + l.p2.y) / 2;
-        
+        let n = point.normalize(output);
+        n.x *= l.length;
+        n.y *= 100;
+        let centerX = line.center(l).x;
+        let centerY = line.center(l).y;
         drawQueue.queue.push({
             type: 'line',
             line: line.make(point.make(-n.x + centerX, -n.y + centerY),
@@ -94,6 +96,14 @@ const line = {
         }); 
 
         return output;
+    },
+    center: (l) => {
+        let centerX = (l.p1.x + l.p2.x) / 2;
+        let centerY = (l.p1.y + l.p2.y) / 2;
+        return point.make(centerX, centerY);
+    },
+    length: (l) => {
+        return point.dist(point.make(l.p2.x - l.p1.x, l.p2.y - l.p1.y));
     }
 };
 
@@ -242,11 +252,12 @@ const polys = {
                 drawQueue.queue.push({
                     type: 'line',
                     line: line.make(p1, p2),
-                    color: '#ffffff'
+                    color: '#ffffff3f',
+                    width: 4
                 }); 
             }
         }
-        console.log(count);
+        //console.log(count);
         return count % 2 == 1;
     }
 };
@@ -302,9 +313,6 @@ loop = () => {
 
     polys.draw();
 
-    line.draw(l1);
-    line.draw(l2);
-
     drawQueue.draw();
 
     step++;
@@ -312,8 +320,4 @@ loop = () => {
 };
 
 
-l1 = line.make({ x: 70, y: 50 },  { x: 110, y: 10 } );
-l2 = line.make({ x: 70, y: 70 },  { x: 110, y: 110 } );
-l1 = line.make({ x: 10, y: 110 }, { x: 110, y: 10 } );
-l2 = line.make({ x: 10, y: 10 },  { x: 110, y: 110 } );
 requestAnimationFrame(loop);
