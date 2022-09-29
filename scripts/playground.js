@@ -3,6 +3,9 @@ const point = {
     make: (x, y) => {
         return {x: x, y: y};
     },
+    slope: (p) => {
+        return p.y / p.x;
+    },
     zero: () => point.make(0, 0),
     one: () => point.make(1, 1),
     up: () => point.make(0, -1),
@@ -26,7 +29,7 @@ const point = {
         return p1.x * p2.x + p1.y * p2.y;
     },
     project: (p, vector) => {
-        let coef = point.dot(p, vector) / point.dot(vector, vector)
+        let coef = point.dot(p, vector) / point.dot(vector, vector);
         return point.make(vector.x * coef, vector.y * coef);
     },
     draw: (p, color = '#C16E70', radius = 3, lineWidth = 2, fillColor = 'transparent') => {
@@ -54,12 +57,16 @@ const line = {
         this.ctx.stroke();
         //console.log('x: ' + p1.x + ', ' + p1.y + '\t y: ' + p2.x + ', ' + p2.y);
     },
+    slope: (l) => {
+        return (l.p2.x - l.p1.x) / (l.p2.y - l.p1.y);
+    },
     project: (l, vector) => {
         return line.make(point.project(l.p1, vector), point.project(l.p2, vector));
     },
     overlapOnAxis: (l1, l2, axis) => {
         let first = line.project(l1, axis);
         let second = line.project(l2, axis);
+
         let p1 = point.magnitude(first.p1);
         let p2 = point.magnitude(first.p2);
         let p3 = point.magnitude(second.p1);
@@ -76,17 +83,16 @@ const line = {
          || point.equals(l1.p2, l2.p1) || point.equals(l1.p2, l2.p1)) {
             return true;
         }
-        let norm = point.make(l1.p2.x - l1.p1.x, l1.p2.y - l1.p1.y);
+        let n1 = line.normal(l1);
+        let n2 = line.normal(l2);
         
-        return line.overlapOnAxis(l1, l2, line.normal(l1))
-            & /* using & not && for drawQueue in line.normal */ 
-            line.overlapOnAxis(l1, l2, line.normal(l2));
+        return line.overlapOnAxis(l1, l2, n1)
+            &&  line.overlapOnAxis(l1, l2, n2);
     },
     normal: (l) => {
         let output = point.normal(point.make(l.p2.x - l.p1.x, l.p2.y - l.p1.y));
-        let n = point.normalize(output);
-        n.x *= l.length;
-        n.y *= 100;
+        let n = output;
+       
         let centerX = line.center(l).x;
         let centerY = line.center(l).y;
         drawQueue.queue.push({
@@ -257,7 +263,6 @@ const polys = {
                 }); 
             }
         }
-        //console.log(count);
         return count % 2 == 1;
     }
 };

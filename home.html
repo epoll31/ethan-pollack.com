@@ -14,35 +14,29 @@
 
 <body>
     <div id="background" class="background"> </div>
+    <div class="header">
+        <div class="profile"></div>    
+        <img class="name" src="assets/full-name-red.svg">
+    </div>
     <div id="main" class="main">
-        <img class="profile" src="assets/img.png" />
+        <div class="profile"> </div>
         <img class="name" type="vector" src="assets/full-name-red.svg">
-        
         <div class="bubbles">
-            <div class="bubble link" 
-                title="Click to view my resume!"
-                onclick="toggleFrame('EthanPollackResume.pdf')">
+            <div class="bubble link" title="Click to view my resume!" onclick="toggleFrame('EthanPollackResume.pdf')">
                 Resume
             </div>
-            <a  class="bubble link"
-                href="https://www.linkedin.com/in/ethanpollack" 
-                target="_blank" 
+            <a class="bubble link" href="https://www.linkedin.com/in/ethanpollack" target="_blank"
                 title="Click to view my LinkedIn!">
                 LinkedIn
             </a>
-            <a  class="bubble link" 
-                href="https://www.github.com/epoll31" 
-                target="_blank" 
+            <a class="bubble link" href="https://www.github.com/epoll31" target="_blank"
                 title="Click to view my GitHub!">
                 GitHub
             </a>
-            <div class="bubble link"
-                onclick="toggleFrame('pages/playground.html')">Playground</div>
-            <div class="bubble link"
-                onclick="toggleFrame('pages/macTerminal.html')">Mac Terminal Utility</div>
+            <div class="bubble link" onclick="toggleFrame('pages/playground.html')">Playground</div>
+            <div class="bubble link" onclick="toggleFrame('pages/macTerminal.html')">Mac Terminal Utility</div>
             <div class="bubble nodisp">Education</div>
             <div class="bubble nodisp">Work Experience</div>
-
         </div>
     </div>
     <div id="snake" class="nodisp snakeFrame">
@@ -53,16 +47,11 @@
     <div id="frame-container" class="frame-container nodisp">
         <div class="profile"></div>
         <img class="name" type="vector" src="assets/full-name-red.svg">
-        <img id="close" 
-            class="close" 
-            src="assets/icon-x.svg"
-            onclick="toggleFrame()"/>
-        <iframe id="frame" 
-                class="frame"
-                src="EthanPollackResume.pdf"></iframe>
-        
+        <img id="close" class="close" src="assets/icon-x.svg" onclick="toggleFrame()" />
+        <iframe id="frame" class="frame" src="EthanPollackResume.pdf"></iframe>
+
     </div>
-        
+
 </body>
 
 </html>

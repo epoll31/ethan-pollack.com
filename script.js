@@ -1,6 +1,6 @@
 
 window.onload = () => {
-    toggleFrame('pages/playground.html')
+    //toggleFrame('pages/playground.html')
 };
 
 toggleFrame = (url) => {

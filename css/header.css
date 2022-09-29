@@ -1,0 +1,46 @@
+.header {
+
+    position: fixed;
+    top: 0%;
+    width: 100vw;
+    height: 60px;
+    padding: 5px;
+
+    background-color: #FFEBE750;
+    background-size: contain;
+
+
+    transition: 0.3s;
+
+}
+.header.hidden {
+    height: 0px;
+    overflow-y: hidden;
+    padding: 0%;
+
+    transition: 0.3s;
+}
+
+.header > * { 
+    display: inline-block;
+}
+
+.header > .profile {
+    background-image: url(../assets/headshot.svg);
+    background-position-x: center;
+    background-position-y: center;
+    background-size: 120%;
+    border-radius: 50%;
+    border: solid #503D3F 4px;
+
+    aspect-ratio: 1;
+
+    
+    height: calc(100% - 8px);
+}
+.header > .name {
+    margin: 5px 5px 5px 15px;
+    object-fit: contain;
+
+    height: calc(100% - 8px);
+}
