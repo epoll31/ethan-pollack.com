@@ -33,14 +33,15 @@ body{
 
 .main {
     display: block;
-    margin: 50px auto auto auto;
+    margin: 100px auto auto auto;
     width: 75%;
     max-width: 750px;
 }
 .main > .profile {
     background-image: url(assets/headshot.png);
-    background-size: 100%;
-    background-position: center 25%;
+    background-size: 110%;
+    background-position: center 40%;
+    background-color: #503D3F50;
 
     border-radius: 100%;
     width: 200px;
