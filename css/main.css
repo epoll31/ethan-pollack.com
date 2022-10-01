@@ -1,0 +1,35 @@
+
+@import url(../css/bubble.css);
+
+.main {
+    display: block;
+    margin: 10px auto auto auto;
+    width: 75%;
+    max-width: 750px;
+    transition: 0.3s;
+}
+
+.main .noheader {
+    margin: 50px auto auto auto;
+    transition: 0.3s;
+}
+
+
+.main > .profile {
+    background-image: url(../assets/headshot.png);
+    background-size: 110%;
+    background-position: center 40%;
+    background-color: #503D3F50;
+
+    border-radius: 100%;
+    width: 200px;
+    height: 200px;
+    margin-left: calc(50% - 100px);
+    border: solid #503D3F 10px;
+
+    z-index: -5;
+}
+
+.main > .name {
+    margin: 30px 10px 30px 10px;
+}

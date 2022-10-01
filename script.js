@@ -1,25 +1,34 @@
 
-window.onload = () => {
-    //toggleFrame('pages/playground.html')
-};
+import {pageManager} from "./pageManager";
 
-toggleFrame = (url) => {
-    let main = document.getElementById('main');
-    let frameContainer = document.getElementById('frame-container');
+this.toggleFrame = (url) => {
     let frame = document.getElementById('frame');
+    let header = document.getElementById('header');
     let bg = document.getElementById('background');
 
-    if (frameContainer.classList.contains('nodisp')
-     && url != undefined ) {
-        main.classList.add('nodisp');
-        frameContainer.classList.remove('nodisp');
+    if (url != undefined) {
         bg.classList.add('blur');
+        frame.classList.remove('noheader');
+        header.classList.remove('nodisp');
 
         frame.src = url;
     }
     else {
-        main.classList.remove('nodisp');
-        frameContainer.classList.add('nodisp');
+        
+        frame.classList.add('noheader');
         bg.classList.remove('blur');
+        header.classList.add('nodisp');
+
+        frame.data = 'pages/main.html';
+        frame.contentWindow.toggleFrame = toggleFrame;
+
+        document.getElementById('targetFrame').contentWindow.targetFunction();
     }
 };
+
+window.onload = () => {
+    console.log('hit');
+    //pageManager.init(document.getElementById('frame'));
+    //pageManager.setPage(homePage);
+};
+

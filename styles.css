@@ -1,5 +1,4 @@
 @import url(css/header.css);
-@import url(css/bubble.css);
 @import url(css/education.css);
 @import url(css/frame.css);
 
@@ -19,7 +18,7 @@
     top: 0;
     width: 100vw;
     height: 100vh;
-    background-image: url("./assets/bg.svg");
+    background-image: url(./assets/bg.svg);
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: bottom center;
@@ -31,30 +30,6 @@ body{
     margin: 0px;
 }
 
-.main {
-    display: block;
-    margin: 100px auto auto auto;
-    width: 75%;
-    max-width: 750px;
-}
-.main > .profile {
-    background-image: url(assets/headshot.png);
-    background-size: 110%;
-    background-position: center 40%;
-    background-color: #503D3F50;
-
-    border-radius: 100%;
-    width: 200px;
-    height: 200px;
-    margin-left: calc(50% - 100px);
-    border: solid #503D3F 10px;
-
-    z-index: -5;
-}
-
-.main > .name {
-    margin: 30px 10px 30px 10px;
-}
 
 
 @media only screen and (max-width: 640px) {

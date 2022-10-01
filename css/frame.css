@@ -1,19 +1,14 @@
 
-.frame-container {
-    display: block;
-
-    width: calc(100vw - 40px);
-}
 .frame::-webkit-scrollbar {
     background-color: transparent;
 }
 
-.frame-container > .frame {
+.frame {
     position: fixed;
-    left: 20px;
-    top: 60px;
-    width: calc(100vw - 40px);
-    height: calc(100vh - 80px);
+    left: 0px;
+    top: 70px;
+    width: calc(100vw - 0px);
+    height: calc(100vh - 60px);
     
     border-radius: 15px;
     border-color: #f1c5aa;
@@ -21,42 +16,8 @@
     border-width: 1px;
 }
 
-.frame-container > .profile {
-    border: solid #503D3F 1px;
-    border-radius: 100%;
-    width: 45px;
-    height: 45px;
-    background-image: url('../assets/img.png');
-    background-size: 100%;
-    background-position: 70;
-
-    position: fixed;
-    left: 20px;
-    top: 7px;
-}
-.frame-container > .name {
-    height: 50px;
-
-    position: fixed;
-    left: 80px;
-    top: 7px;
-}
-
-
-.frame-container > .close {
-    width: 40px;
-    height: 40px;
-
-    position: fixed;
-    right: 10px;
-    top: 10px;
-
+.frame.noheader {
+    top: 0px;
+    height: 100vh;
     transition: 0.3s;
-    -webkit-backface-visibility: hidden;
-}
-
-.frame-container > .close:hover,
-.frame-container > .close:active,
-.frame-container > .close:focus {
-    scale: 115%;
 }
