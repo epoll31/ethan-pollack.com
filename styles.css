@@ -26,6 +26,12 @@ body{
     margin-left: calc(50% - 100px);
     border: solid #503D3F 10px;
 
+    background-image: url(assets/headshot.png);
+    background-repeat: none;
+    background-size: 90%;
+    background-position: center;
+    background-color: #503D3F50;
+
     z-index: -5;
 }
 
