@@ -1,5 +1,5 @@
 
-import { page as homePage } from './pages/home';
+import { page as homePage } from './modules/home';
 
 export interface Page {
   name: string;
@@ -7,7 +7,7 @@ export interface Page {
   onload: () => void;
 }
 
-interface PageManager {
+export interface PageManager {
   pages: Array<Page>;
   container?: HTMLDivElement;
   init: (container: HTMLDivElement) => void;
@@ -33,22 +33,3 @@ window.onload = () => {
   pageManager.setPage(homePage);
   console.log('hit');
 };
-
-/*
-
-continue working on pageManager:
- - implement functions
-
- figure out import/export
- -
-
-
-
-let myObject = {
-  field1: value1,
-  field2: value2
-};
-export {myObject as default};
-import 
-
-*/
