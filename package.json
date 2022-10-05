@@ -1,0 +1,22 @@
+{
+  "name": "epcom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epoll31/ethan-pollack.com.git"
+  },
+  "author": "Ethan Pollack",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/epoll31/ethan-pollack.com/issues"
+  },
+  "homepage": "https://github.com/epoll31/ethan-pollack.com#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
