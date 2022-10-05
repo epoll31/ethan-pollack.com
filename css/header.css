@@ -23,19 +23,18 @@
 }
 
 .header > * { 
-    flex: 1;
-    background-repeat: no-repeat;
+    flex: auto;
+    padding: 5px 5px 5px 5px;
 }
 
 .header > .profile {
-    background-image: url(../assets/headshot.svg);
+    background-image: url(../assets/svg/headshot.svg);
     background-position: 40% center;
     background-size: 120%;
     border-radius: 50%;
     border: solid #503D3F 3px;
 
-
-    flex: 0 1;
+    flex: none;
     aspect-ratio: 1/1;
 
 }
@@ -45,7 +44,8 @@
 .header > .home {
     background-image: url(../assets/icons/home.svg);
     background-position: center;
+    background-repeat: no-repeat;
  
-    flex: 0 1;
+    flex: none;
     aspect-ratio: 1/1;
 }
